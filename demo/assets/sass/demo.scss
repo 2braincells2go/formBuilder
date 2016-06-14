@@ -1,46 +1,8 @@
-@import "variables";
-@import "reset";
-@import "theme";
-
-.donate-plea {
-  width: 50%;
-  font-size: .75em;
-  float: right;
-  text-align: right;
-
-  form {
-    float: right;
-  }
+body {
+  margin: 0;
+  padding: 5px 0;
 }
 
-header {}
-
-.badges {
-  margin-top: -30px;
-}
-
-.social {
-  margin-top: -40px;
-
-  .chicklets {
-    text-indent: -9999px;
-  }
-}
-
-em {
-  color: $border-color;
-  display: block;
-}
-
-fieldset {
-  border: 1px solid $border-color;
-  background: $off-white;
-  padding: 20px;
-  margin: 20px 0;
-}
-
-legend {
-  border: 1px solid $border-color;
-  background: $off-white;
-  padding: 5px 10px;
+#rerun-button {
+  display: none;
 }

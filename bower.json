@@ -1,6 +1,6 @@
 {
 	"name": "formBuilder",
-	"version": "1.3.4",
+	"version": "1.9.32",
 	"main": [
 		"dist/*"
 	],
@@ -9,6 +9,7 @@
 		"Kevin Chappell <kevin.b.chappell@gmail.com>"
 	],
 	"keywords": [
+	  "jquery-plugin",
 		"forms",
 		"drag and drop",
 		"form builder"
@@ -18,12 +19,8 @@
 		"jquery"
 	],
 	"ignore": [
-		"**/.*",
-		"gulpfile.js",
-		"package.json",
-		"params.json",
-		"src",
-		"test",
-		"node_modules"
+		"*",
+		"!dist",
+		"!dist/**/*"
 	]
 }

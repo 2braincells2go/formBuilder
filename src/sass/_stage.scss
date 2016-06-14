@@ -1,20 +1,58 @@
 .frmb {
+  list-style-type: none;
+  min-height: 200px;
+  margin: 0 6px 0 0;
+  padding: 0;
+  transition: background-color 500ms ease-in-out;
+
+  &.removing {
+    overflow: hidden;
+  }
+
+  .empty & {
+    border: 3px dashed $grey-light;
+    margin-right: 5px;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+
   li {
-    clear: both;
     position: relative;
-    margin-left: 0;
-    margin-bottom: 5px;
-    background-color: $white;
-    border-radius: 5px;
-    border: 1px solid $white;
-    transition: border 250ms ease-in-out;
     padding: 6px;
+    clear: both;
+    margin-left: 0;
+    margin-bottom: 3px;
+    background-color: $white;
+    transition: background-color 250ms ease-in-out, margin-top 500ms;
+
+    &.hidden-field {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    &:first-child {
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+
+      .field-actions {
+        .btn:last-child {
+          border-radius: 0 5px 0 0;
+        }
+      }
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
 
     &:hover {
-      border: 1px solid $grey-light-30;
+      border-color: #66afe9;
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 
-      li:hover {
-        background: #fefefe;
+      li {
+        :hover {
+          background: #fefefe;
+        }
       }
     }
 
@@ -22,87 +60,129 @@
       font-weight: 400;
     }
 
-    &.frmb-placeholder, &.ui-state-highlight {
-      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#545454+0,000000+75&amp;1+0,0+75 */
-      background: -moz-radial-gradient(center, ellipse cover, rgba(84, 84, 84, 1) 0%, rgba(0, 0, 0, 0) 75%);
-      /* FF3.6+ */
-      background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(84, 84, 84, 1)), color-stop(75%, rgba(0, 0, 0, 0)));
-      /* Chrome,Safari4+ */
-      background: -webkit-radial-gradient(center, ellipse cover, rgba(84, 84, 84, 1) 0%, rgba(0, 0, 0, 0) 75%);
-      /* Chrome10+,Safari5.1+ */
-      background: -o-radial-gradient(center, ellipse cover, rgba(84, 84, 84, 1) 0%, rgba(0, 0, 0, 0) 75%);
-      /* Opera 12+ */
-      background: -ms-radial-gradient(center, ellipse cover, rgba(84, 84, 84, 1) 0%, rgba(0, 0, 0, 0) 75%);
-      /* IE10+ */
+    @keyframes PLACEHOLDER {
+      0% {
+        height: 0;
+      }
+
+      100% {
+        height: 15px;
+      }
+    }
+
+    &.frmb-placeholder,
+    &.ui-state-highlight {
+      height: 0;
+      padding: 0;
       background: radial-gradient(ellipse at center, rgba(84, 84, 84, 1) 0%, rgba(0, 0, 0, 0) 75%);
-      /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#00000000',GradientType=1 );
-      /* IE6-9 fallback on horizontal gradient */
       border: 0 none;
-      -webkit-clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
       clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-      border: 0 none;
-      height: 5px;
       visibility: visible;
+      overflow: hidden;
+      margin-bottom: 3px;
+      animation: PLACEHOLDER 250ms forwards;
     }
 
-    &.disabled input[type=checkbox] {
-      float: left;
-      margin-right: 10px;
+    &.moving,
+    &.ui-sortable-helper {
+      transition: box-shadow 500ms ease-in-out;
+      box-shadow: 2px 2px 6px 0 $grey;
+      border: 1px solid $white;
+      border-radius: 5px;
     }
 
-    &.disabled label {
-      font-size: 12px;
-      font-weight: 400;
+    &.disabled {
+      z-index: 1;
+
+      [type=checkbox] {
+        float: left;
+        margin-right: 10px;
+      }
+
+      h2 {
+        border-bottom: 0 none;
+      }
+
+      label {
+        font-size: 12px;
+        font-weight: 400;
+        color: $grey;
+      }
+
+      .prev-holder {
+        cursor: default;
+        line-height: 28px;
+        padding-left: 5px;
+      }
+    }
+
+    .close-field {
+      position: absolute;
       color: $grey;
+      left: 50%;
+      bottom: 6px;
+      background: #fff;
+      border-top: 1px solid #d7d7d7;
+      border-left: 1px solid #d7d7d7;
+      border-right: 1px solid #D7D7D7;
+      transform: translateX(-50%);
+      padding: 0 5px;
+      border-top-right-radius: 3px;
+      border-top-left-radius: 3px;
+      cursor: pointer;
+      transition: background-color 250ms ease-in-out;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
 
-    &.disabled .prev-holder {
-      cursor: default;
-      line-height: 28px;
-      padding-left: 5px;
+    &.button-field,
+    &.header-field,
+    &.paragraph-field {
+      h1,
+      h2,
+      h3,
+      p,
+      canvas,
+      output,
+      address,
+      blockquote,
+      .prev-holder {
+        margin: 0;
+      }
+
+      .field-label {
+        display: none;
+      }
+
+      &.editing {
+        .field-label {
+          display: block;
+        }
+      }
     }
 
-    a.remove {
-      opacity: 1;
-    }
-
-    &.cta {
-      font-size: 30px;
-      padding: 20% 0;
-      text-align: center;
+    &.paragraph-field {
+      .fld-label {
+        min-height: 150px;
+      }
     }
   }
 
-  a.btn {
-    border: 1px solid $white;
-    color: $black;
-    display: inline-block;
-    height: 12px;
-    line-height: 13px;
-    text-align: center;
-    text-decoration: none;
-    width: 11px;
-  }
-
-  a.del-button, a.remove {
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    display: inline-block;
-    opacity: 0;
-    padding: 3px 4px;
-    border-radius: 0 5px 0 0;
-    border-color: $grey-light-30;
-  }
-
-  a.del-button:hover, a.remove:hover {
-    border-color: $remove;
-    color: $remove;
-  }
-
-  li.delete:hover, li:hover li.delete:hover {
+  li.deleting,
+  li.delete:hover,
+  li:hover li.delete:hover {
     background-color: #fdd;
+
+    .close-field {
+      background-color: #fdd;
+    }
+  }
+
+  li.deleting {
+    z-index: 20;
+    pointer-events: none;
   }
 
   &.disabled {
@@ -119,11 +199,6 @@
       padding: 5px 0;
       position: relative;
     }
-
-    .tooltip-element {
-      display: inline;
-      visibility: visible;
-    }
   }
 
   .frm-holder {
@@ -136,13 +211,33 @@
 
   .prev-holder {
     display: block;
+    margin-top: 12px;
+
+    input[type='color'] {
+      width: 60px;
+      padding: 2px;
+      display: inline-block;
+    }
+
+    input[type='date'] {
+      width: auto;
+    }
+
+    select[multiple] {
+      height: auto;
+    }
+
+    label {
+      font-weight: normal;
+    }
   }
 
-  .required_asterisk {
+  .required-asterisk {
     display: none;
   }
 
-  .field-label, .legend {
+  .field-label,
+  .legend {
     color: $grey;
     margin-bottom: 5px;
   }
@@ -150,4 +245,255 @@
   .disabled .field-label {
     display: block;
   }
+
+  .field-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .btn {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      opacity: 0;
+      border-radius: 0;
+      border-color: $grey-light-30;
+      color: $grey-light-30;
+      line-height: 32px;
+      font-size: 16px;
+      border-width: 0 0 1px 1px;
+
+      &:first-child {
+        border-bottom-left-radius: 5px;
+      }
+    }
+
+    .toggle-form {
+      font-size: .85em;
+      background-color: rgba(255, 255, 255, 0.75);
+
+      &:hover {
+        color: $black;
+      }
+    }
+
+    .del-button {
+      &:hover {
+        background-color: $remove;
+        color: $white;
+      }
+    }
+  }
+}
+
+.stage-wrap {
+  position: relative;
+  float: left;
+  width: 74%;
+
+  &.pull-right {
+    .frmb {
+      margin: 0 0 0 6px;
+    }
+  }
+
+  @include breakpoint('phone-lrg') {
+    width: calc(100% - 64px);
+  }
+
+
+  .action-links {
+    width: calc( 100% - 141px);
+    display: none;
+    float: right;
+    overflow: hidden;
+    text-align: right;
+  }
+
+  &.empty {
+    &:after {
+      content: attr(data-content);
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      margin-top: -1em;
+    }
+  }
+}
+
+.stage-wrap .action-links .active {
+  font-weight: 700;
+  color: $black;
+}
+
+.option-actions {
+  text-align: right;
+}
+
+.sortable-options-wrap {
+  width: 81.33333333%;
+  display: inline-block;
+}
+
+ol.sortable-options {
+  display: inline-block;
+  width: 100%;
+  margin-left: 2%;
+  background: $grey-light-30;
+  margin-bottom: 0;
+  border-radius: 5px;
+  list-style: none;
+  padding: 0;
+
+  li {
+    cursor: move;
+    margin: 1px;
+
+    &:nth-child(1) .remove,
+    &:nth-child(2) .remove {
+      display: none;
+    }
+
+    .remove {
+      position: absolute;
+      opacity: 1;
+      right: 14px;
+      height: 17px;
+      width: 17px;
+      line-height: 17px;
+      text-align: center;
+      top: 14px;
+      font-size: 18px;
+      padding: 0;
+      color: $error;
+
+      &:hover {
+        background-color: $error;
+        text-decoration: none;
+        color: $white;
+      }
+    }
+  }
+
+  input[type=checkbox],
+  input[type=radio] {
+    margin: 0;
+    width: 5%;
+  }
+
+  input[type=text] {
+    width: calc(44.5% - 17px);
+    margin: 0 1%;
+    float: none;
+  }
+}
+
+.form-field {
+  .form-group {
+    width: 100%;
+    clear: left;
+    float: none;
+
+    input[type=checkbox]:not(.option-selected) {
+      margin: 12px 5px 0 2%;
+    }
+  }
+}
+
+.form-elements .field-options .add-area .add {
+  clear: both;
+}
+
+.form-elements {
+  padding: 10px 5px;
+  background: #f7f7f7;
+  border-radius: 3px;
+  margin: 12px 0 0;
+
+  /* box-shadow: 0 2px 5px #ccc inset; */
+  border: 1px solid #d7d7d7;
+}
+
+.form-elements {
+  input[type=text],
+  textarea,
+  select {
+    width: 81.33333333%;
+    transition: background 250ms ease-in-out;
+    margin-left: 2%;
+    padding: 6px 12px;
+    border: 1px solid #AFAFAB;
+    background-color: $white;
+    float: left;
+
+    .col-md-6 &,
+    .col-md-8 & {
+      width: 100%;
+    }
+  }
+
+  .btn-group {
+    margin-left: 2%;
+  }
+}
+
+/*   ------------   TOOLTIP   ------------   */
+
+*[tooltip] {
+  position: relative;
+}
+
+*[tooltip]:hover:after {
+  background: darken($grey, 25%);
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 5px 5px 5px 0;
+  bottom: 23px;
+  color: $white;
+  content: attr(tooltip);
+  padding: 10px 5px;
+  position: absolute;
+  z-index: 98;
+  left: 2px;
+  width: 230px;
+  text-shadow: none;
+  font-size: 12px;
+  line-height: 1.5em;
+  cursor: default;
+}
+
+*[tooltip]:hover:before {
+  border: solid;
+  border-color: #222 transparent;
+  border-width: 6px 6px 0 6px;
+  bottom: 17px;
+  content: '';
+  left: 2px;
+  position: absolute;
+  z-index: 99;
+  cursor: default;
+}
+
+.tooltip-element {
+  display: inline;
+  visibility: visible;
+  color: $white;
+  background: $black;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: inline-block;
+  text-align: center;
+  line-height: 16px;
+  margin: 0 5px;
+  font-size: 12px;
+  cursor: default;
 }
